@@ -1,0 +1,9 @@
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\bin\Debug\Template Analyser.exe.config
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\bin\Debug\Template Analyser.exe
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\bin\Debug\Template Analyser.pdb
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template Analyser.csprojResolveAssemblyReference.cache
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template_Analyser.Form1.resources
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template_Analyser.Properties.Resources.resources
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template Analyser.csproj.GenerateResource.Cache
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template Analyser.exe
+c:\users\rpuch\documents\visual studio 2015\Projects\Template Analyser\Template Analyser\obj\Debug\Template Analyser.pdb
