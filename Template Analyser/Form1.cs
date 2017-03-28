@@ -30,43 +30,92 @@ namespace Template_Analyser
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-            lstbox_wildcards.Items.Clear();
-
-            string[] files = Directory.GetFiles(textBox1.Text);
-
-            List<string> wildcards = new List<string>();
-
-            foreach(string file in files)
+            if (AnalysisType_Wildcards.Checked)
             {
-                string docText = null;
+                label2.Text = "Wildcards";
 
-                using (StreamReader sr = new StreamReader(file))
+                lstbox_wildcards.Items.Clear();
+
+                string[] files = Directory.GetFiles(textBox1.Text);
+
+                List<string> wildcards = new List<string>();
+
+                foreach (string file in files)
                 {
-                    docText = sr.ReadToEnd();
+                    string docText = null;
+
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        docText = sr.ReadToEnd();
+                    }
+
+                    Regex regexText = new Regex("@@(.*?)@@");
+
+                    Match m = regexText.Match(docText);
+
+
+                    while (m.Success)
+                    {
+                        wildcards.Add(m.Value);
+
+                        m = m.NextMatch();
+                    }
                 }
 
-                Regex regexText = new Regex("@@(.*?)@@");
+                //dedupe the list
+                List<string> deduped = new List<string>(wildcards.Distinct<String>().ToList<string>());
 
-                Match m = regexText.Match(docText);
-
-
-                while (m.Success)
+                foreach (var wildcard in deduped)
                 {
-                    wildcards.Add(m.Value);
 
-                    m = m.NextMatch();
+                    lstbox_wildcards.Items.Add(wildcard);
                 }
             }
 
-            //dedupe the list
-            List<string> deduped = new List<string>(wildcards.Distinct<String>().ToList<string>());
-
-            foreach (var wildcard in deduped)
+            if(AnalysisType_Products.Checked)
             {
+                label2.Text = "Products";
+                lstbox_wildcards.Items.Clear();
 
-                lstbox_wildcards.Items.Add(wildcard);
+                string[] files = Directory.GetFiles(textBox1.Text);
+
+                List<string> ProductTypes = new List<string>();
+
+                foreach (string file in files)
+                {
+                    XmlDocument doc = new XmlDocument();
+
+                    doc.Load(file);
+
+                    string xpath = "//TaxWrapper/Product|//Products/Product";
+
+                    XmlNodeList nodes = doc.SelectNodes(xpath);
+
+
+                    if (nodes != null)
+                    {
+                        foreach (XmlNode node in nodes)
+                        {
+                            var type = node.SelectSingleNode(".//Type|.//type");
+                            if (type != null)
+                            {
+                                ProductTypes.Add(type.InnerText);
+                            }
+                        }
+                    }
+                }
+
+                //dedupe the list
+                List<string> deduped = new List<string>(ProductTypes.Distinct<String>().ToList<string>());
+
+                foreach (var wildcard in deduped)
+                {
+
+                    lstbox_wildcards.Items.Add(wildcard);
+                }
+
             }
+
         }
 
         private void lstbox_wildcards_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,9 +131,16 @@ namespace Template_Analyser
                 XmlDocument doc = new XmlDocument();
 
                 doc.Load(file);
+                string xpath = "";
+                if (AnalysisType_Wildcards.Checked)
+                {
+                    xpath = "//*[text() = '" + wildcard + "']";
+                }
 
-                string xpath = "//*[text() = '" + wildcard + "']";
-
+                if (AnalysisType_Products.Checked)
+                {
+                    xpath = "//*[Type = '" + wildcard + "']";
+                }
 
                 XmlNodeList nodes = doc.SelectNodes(xpath);
                 if (nodes != null)
@@ -92,13 +148,33 @@ namespace Template_Analyser
                     foreach (XmlNode node in nodes)
                     {
                         //try get a descriptive name
-                        string name = node.ParentNode.SelectSingleNode("Name")?.InnerText;
-
-                        treeView1.Nodes.Add(new TreeNode(node.ParentNode.Name+"-"+name+"-"+node.Name));
+                        string comp = "";
+                        if (AnalysisType_Wildcards.Checked)
+                        {
+                            string name = node.ParentNode.SelectSingleNode("Name")?.InnerText;
+                            comp = node.ParentNode.Name + "-" + name + "-" + node.Name;
+                        }
+                        if (AnalysisType_Products.Checked)
+                        {
+                            string name = node.SelectSingleNode(".//Name")?.InnerText;
+                            string tax_wrapper = "";
+                            if (node.ParentNode.Name == "Products")
+                            {
+                                tax_wrapper = node.ParentNode.ParentNode.SelectSingleNode(".//Name")?.InnerText  ;
+                            }
+                            else
+                            {
+                                tax_wrapper = node.ParentNode.SelectSingleNode(".//Name")?.InnerText;
+                            }
+                            comp = tax_wrapper + "-" + name + ":" + Path.GetFileName(file);
+                        }
+                        treeView1.Nodes.Add(new TreeNode(comp));
                         TreeNode tNode = new TreeNode();
                         tNode = treeView1.Nodes[treeView1.Nodes.Count - 1];
-
-                        AddNode(node.ParentNode, tNode);
+                        if (LoadNode.Checked)
+                        {
+                            AddNode(node, tNode);
+                        }
                     }
                 }
 
@@ -136,5 +212,48 @@ namespace Template_Analyser
             }
         }
 
+        private StreamWriter sr;
+        // Xml tag for node, e.g. 'node' in case of <node></node>
+        private const string XmlNodeTag = "node";
+
+        // Xml attributes for node e.g. <node text="Asia" tag="" 
+        // imageindex="1"></node>
+        private const string XmlNodeTextAtt = "text";
+        private const string XmlNodeTagAtt = "tag";
+        private const string XmlNodeImageIndexAtt = "imageindex";
+
+     
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+  
+        }
+
+        private void AnalysisType_Products_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (System.IO.StreamWriter file =
+           new System.IO.StreamWriter(saveFileDialog1.FileName))
+                {
+                    foreach (TreeNode node in treeView1.Nodes)
+                    {
+                         file.WriteLine(node.Text);
+                    }
+                }
+            }
+            
+        }
     }
 }

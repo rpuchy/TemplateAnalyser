@@ -36,6 +36,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.AnalysisType_Wildcards = new System.Windows.Forms.RadioButton();
+            this.AnalysisType_Products = new System.Windows.Forms.RadioButton();
+            this.LoadNode = new System.Windows.Forms.CheckBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -84,9 +88,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(423, 127);
+            this.button2.Location = new System.Drawing.Point(440, 122);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(131, 23);
             this.button2.TabIndex = 6;
             this.button2.Text = "Analyse";
             this.button2.UseVisualStyleBackColor = true;
@@ -99,11 +103,58 @@
             this.treeView1.Size = new System.Drawing.Size(752, 457);
             this.treeView1.TabIndex = 7;
             // 
+            // AnalysisType_Wildcards
+            // 
+            this.AnalysisType_Wildcards.AutoSize = true;
+            this.AnalysisType_Wildcards.Checked = true;
+            this.AnalysisType_Wildcards.Location = new System.Drawing.Point(279, 110);
+            this.AnalysisType_Wildcards.Name = "AnalysisType_Wildcards";
+            this.AnalysisType_Wildcards.Size = new System.Drawing.Size(72, 17);
+            this.AnalysisType_Wildcards.TabIndex = 8;
+            this.AnalysisType_Wildcards.TabStop = true;
+            this.AnalysisType_Wildcards.Text = "Wildcards";
+            this.AnalysisType_Wildcards.UseVisualStyleBackColor = true;
+            // 
+            // AnalysisType_Products
+            // 
+            this.AnalysisType_Products.AutoSize = true;
+            this.AnalysisType_Products.Location = new System.Drawing.Point(279, 133);
+            this.AnalysisType_Products.Name = "AnalysisType_Products";
+            this.AnalysisType_Products.Size = new System.Drawing.Size(67, 17);
+            this.AnalysisType_Products.TabIndex = 9;
+            this.AnalysisType_Products.Text = "Products";
+            this.AnalysisType_Products.UseVisualStyleBackColor = true;
+            this.AnalysisType_Products.CheckedChanged += new System.EventHandler(this.AnalysisType_Products_CheckedChanged);
+            // 
+            // LoadNode
+            // 
+            this.LoadNode.AutoSize = true;
+            this.LoadNode.Location = new System.Drawing.Point(654, 122);
+            this.LoadNode.Name = "LoadNode";
+            this.LoadNode.Size = new System.Drawing.Size(79, 17);
+            this.LoadNode.TabIndex = 10;
+            this.LoadNode.Text = "Load Node";
+            this.LoadNode.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(669, 155);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(154, 23);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "Export Data to text file";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1256, 675);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.LoadNode);
+            this.Controls.Add(this.AnalysisType_Products);
+            this.Controls.Add(this.AnalysisType_Wildcards);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
@@ -128,6 +179,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.RadioButton AnalysisType_Wildcards;
+        private System.Windows.Forms.RadioButton AnalysisType_Products;
+        private System.Windows.Forms.CheckBox LoadNode;
+        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -1,0 +1,8 @@
+C:\Git\TemplateAnalyser\Template Analyser\bin\Release\Template Analyser.exe.config
+C:\Git\TemplateAnalyser\Template Analyser\bin\Release\Template Analyser.exe
+C:\Git\TemplateAnalyser\Template Analyser\bin\Release\Template Analyser.pdb
+C:\Git\TemplateAnalyser\Template Analyser\obj\Release\Template_Analyser.Form1.resources
+C:\Git\TemplateAnalyser\Template Analyser\obj\Release\Template_Analyser.Properties.Resources.resources
+C:\Git\TemplateAnalyser\Template Analyser\obj\Release\Template Analyser.csproj.GenerateResource.Cache
+C:\Git\TemplateAnalyser\Template Analyser\obj\Release\Template Analyser.exe
+C:\Git\TemplateAnalyser\Template Analyser\obj\Release\Template Analyser.pdb
